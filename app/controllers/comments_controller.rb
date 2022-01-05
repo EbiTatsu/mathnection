@@ -1,7 +1,13 @@
 class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
-    @comment.save
+    if @comment.save
+      redirect_to question_path(@comment.question)
+    else
+      @prototype = @comment.question
+      @comments = @question.comments
+      render "question/show"
+    end
   end
 
 
